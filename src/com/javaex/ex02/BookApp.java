@@ -1,4 +1,4 @@
-package com.javaex.ex01;
+package com.javaex.ex02;
 
 import java.util.List;
 
@@ -7,12 +7,15 @@ public class BookApp {
 	public static void main(String[] args) {
 
 		AuthorDao authorDao = new AuthorDao();
-		
-		int cnt= authorDao.authorInsert("이효리", "제주도민");
-		System.out.println(cnt + " success");
+		authorDao.authorInsert("이효리", "제주도민");
 		
 		
 		
+//		int cnt= authorDao.authorInsert("이효리", "제주도민");
+//		System.out.println(cnt + " success");
+		
+		
+		/*
 		List<AuthorVo> authorList = authorDao.authorList();
 		for (AuthorVo authorVo : authorList) {
 			int id = authorVo.getAuthorId();
@@ -20,6 +23,7 @@ public class BookApp {
 			String desc = authorVo.getAuthorDesc();
 			System.out.println(id + ",\t" + name + ",\t" + desc);
 		}
+		*/
 		
 		/*
 		for (int i = 0; i < authorList.size(); i++) {
@@ -32,7 +36,7 @@ public class BookApp {
 		}
 		*/
 		
-		System.out.println(authorList.size() + "명의 작가가 등록되어 있습니다.");
+//		System.out.println(authorList.size() + "명의 작가가 등록되어 있습니다.");
 		
 		// 작가 등록
 //		authorDao.authorInsert("이효리", "제주도민");

@@ -19,8 +19,8 @@ public class AuthorDao {
 	// 메소드 - 일반
 	// authorDao.authorInsert("이문열", "경북 영양");
 
-	// 작가 검색
 
+	
 	// 작가리스트
 	public List<AuthorVo> authorList() {
 
@@ -103,8 +103,9 @@ public class AuthorDao {
 	}
 
 	// 작가 등록
-	public void authorInsert(String name, String desc) {
+	public int authorInsert(String name, String desc) {
 
+		int count = -1;
 		// book_db 데이터베이스에 접속
 		// book/book
 		// author 테이블에
@@ -133,7 +134,7 @@ public class AuthorDao {
 			pstmt.setString(2, desc);
 
 			// - 실행
-			int count = pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 
 			// 4.결과처리
 			System.out.println(count + "건 등록 되었습니다.");
@@ -158,10 +159,12 @@ public class AuthorDao {
 				System.out.println("error:" + e);
 			}
 		}
+		return count;
 	}
 
 	// 작가 삭제
-	public void authorDelete(int no) {
+	public int authorDelete(int no) {
+		int count = -1;
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -183,7 +186,7 @@ public class AuthorDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no); // pstmt.setInt(물음표위치, 실제 들어갈 값);
 			// - 실행
-			int count = pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 
 			// 4.결과처리
 			System.out.println(count + "건 삭제 되었습니다.");
@@ -208,11 +211,13 @@ public class AuthorDao {
 				System.out.println("error:" + e);
 			}
 		}
+		return count;
 	}
 
 	// 작가 수정
-	public void authorUpdate(int id, String name, String desc) {
+	public int authorUpdate(int id, String name, String desc) {
 
+		int count = -1;
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -238,7 +243,7 @@ public class AuthorDao {
 			pstmt.setString(2, desc);
 			pstmt.setInt(3, id);
 			// - 실행
-			int count = pstmt.executeUpdate();
+			count = pstmt.executeUpdate();
 
 			// 4.결과처리
 			System.out.println(count + "건 수정 되었습니다.");
@@ -263,6 +268,7 @@ public class AuthorDao {
 				System.out.println("error:" + e);
 			}
 		}
+		return count;
 
 	}
 
