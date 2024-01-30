@@ -27,8 +27,8 @@ public class BookApp {
 		}
 		System.out.println();
 		// 작가 2명 삭제
-		authorDao.authorDelete2(30);
-		authorDao.authorDelete2(31);
+//		authorDao.authorDelete2(30);
+//		authorDao.authorDelete2(31);
 		
 		
 		// 작가 1명수정
