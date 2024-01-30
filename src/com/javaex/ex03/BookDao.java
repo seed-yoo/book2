@@ -20,9 +20,6 @@ public class BookDao {
 	private String id = "book";
 	private String pw = "book";
 
-	// 생성자
-
-	// 메소드 - getter/setter
 
 	// 메소드 - 일반
 	private void getConnection() {
@@ -212,7 +209,7 @@ public class BookDao {
 		return bookListAll;
 	}
 
-	// 작가 등록
+	// 북 등록
 	public int bookInsert(BookVo bookVo) {
 
 		int count = -1;
@@ -249,5 +246,115 @@ public class BookDao {
 		return count;
 	}
  
+	// 북 삭제
+	public int bookDelete(BookVo bookVo) {
+		int count = -1;
+
+		this.getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " delete from book ";
+			query += " where book_id = ? ";
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookVo.getBookId()); // pstmt.setInt(물음표위치, 실제 들어갈 값);
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 삭제 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		this.close();
+
+		return count;
+	}
+
+	// 북 수정
+	public int bookUpdate(BookVo bookVo) {
+
+		int count = -1;
+
+		this.getConnection();
+		// 0. import java.sql.*;
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " update book ";
+			query += " set title = ?, ";
+			query += " pubs = ?, ";
+			query += " pub_date = ?, ";
+			query += " author_id = ? ";
+			query += " where book_id = ? ";
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bookVo.getBookTitle());
+			pstmt.setString(2, bookVo.getBookPubs());
+			pstmt.setString(3, bookVo.getBookpub_Date());
+			pstmt.setInt(4, bookVo.getBookauthorId());
+			pstmt.setInt(5, bookVo.getBookId());
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 수정 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		this.close();
+		return count;
+
+	}
+	
+	// 북 수정
+	public int bookUpdate2(int no, String title, String pubs, String pub_date, int author_id) {
+
+		int count = -1;
+
+		this.getConnection();
+		// 0. import java.sql.*;
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " update book ";
+			query += " set title = ?, ";
+			query += " pubs = ?, ";
+			query += " pub_date = ?, ";
+			query += " author_id = ? ";
+			query += " where book_id = ? ";
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, pubs);
+			pstmt.setString(3, pub_date);
+			pstmt.setInt(4, author_id);
+			pstmt.setInt(5, no);
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 수정 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		this.close();
+		return count;
+
+	}
 	
 }

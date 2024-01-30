@@ -23,6 +23,11 @@ public class AuthorVo {
 		this.authorName = authorName;
 		this.authorDesc = authorDesc;
 	}
+	public AuthorVo(int authorId) {
+		super();
+		this.authorId = authorId;
+
+	}
 	
 	
 	

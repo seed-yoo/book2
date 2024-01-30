@@ -13,6 +13,9 @@ public class BookApp {
 		AuthorDao authorDao = new AuthorDao();
 		
 		// 작가 5명등록
+//		AuthorVo authorVo = new AuthorVo("1", "5");
+//		authorDao.authorInsert2(authorVo);
+		
 //		authorDao.authorInsert("1", "5");
 //		authorDao.authorInsert("2", "4");
 //		authorDao.authorInsert("3", "3");
@@ -26,13 +29,19 @@ public class BookApp {
 			System.out.println(vo.getAuthorId() + ", " + vo.getAuthorName() + ", " + vo.getAuthorDesc());
 		}
 		System.out.println();
+		
 		// 작가 2명 삭제
-//		authorDao.authorDelete2(30);
-//		authorDao.authorDelete2(31);
+//		AuthorVo authorVo = new AuthorVo(31);
+//		authorDao.authorDelete2(authorVo);
+		
+//		authorDao.authorDelete(24);
+//		authorDao.authorDelete(23);
 		
 		
 		// 작가 1명수정
-
+//		AuthorVo authorVo = new AuthorVo(30, "tes", "test");
+//		authorDao.authorUpdate2(authorVo);
+		
 		
 		// 작가출력
 		
@@ -58,11 +67,19 @@ public class BookApp {
 		
 		
 		// 책 5권 등록
+//		BookVo bookVo = new BookVo("test", "test", "2024/01/30", 3);
+//		bookDao.bookInsert(bookVo);
+		
 		
 		// 책 수정
+//		BookVo bookVo = new BookVo(17, "t", "test", "2024/01/31", 2);
+//		bookDao.bookUpdate(bookVo);
+//		bookDao.bookUpdate2(17, "t", "test", "2024/01/31", 2);
+		
 		
 		// 책 삭제
-		
+//		BookVo bookVod = new BookVo(17);
+//		bookDao.bookDelete(bookVod);
 		
 		
 	}

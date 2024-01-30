@@ -18,6 +18,25 @@ public class BookVo {
 		super();
 	}
 
+	public BookVo(int bookId) {
+		super();
+		this.bookId = bookId;
+
+	}
+	public BookVo(int bookId, String bookTitle, String bookPubs, String bookpub_Date) {
+		super();
+		this.bookId = bookId;
+		this.bookTitle = bookTitle;
+		this.bookPubs = bookPubs;
+		this.bookpub_Date = bookpub_Date;
+	}
+	public BookVo(String bookTitle, String bookPubs, String bookpub_Date, int bookauthorId) {
+		super();
+		this.bookTitle = bookTitle;
+		this.bookPubs = bookPubs;
+		this.bookpub_Date = bookpub_Date;
+		this.bookauthorId = bookauthorId;
+	}
 	public BookVo(int bookId, String bookTitle, String bookPubs, String bookpub_Date, int bookauthorId) {
 		super();
 		this.bookId = bookId;
