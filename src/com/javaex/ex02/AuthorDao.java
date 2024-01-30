@@ -14,7 +14,12 @@ public class AuthorDao {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-	
+
+	private String driver = "com.mysql.cj.jdbc.Driver";
+	private String url = "jdbc:mysql://localhost:3306/book_db";
+	private String id = "book";
+	private String pw = "book";
+
 	// 생성자
 
 	// 메소드 - getter/setter
@@ -24,21 +29,19 @@ public class AuthorDao {
 
 		try {
 			// 1. JDBC 드라이버 (Oracle) 로딩
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName(driver);
 
 			// 2. Connection 얻어오기
-			String url = "jdbc:mysql://localhost:3306/book_db";
-			conn = DriverManager.getConnection(url, "book", "book");
-			
+			conn = DriverManager.getConnection(url, id, pw);
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
-		
-		
+
 	} // getConnection()
-	
+
 	private void close() {
 		// 5. 자원정리
 		try {
@@ -54,14 +57,14 @@ public class AuthorDao {
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
-		
+
 	}
 
 	// 작가 등록
 	public int authorInsert(String name, String desc) {
 
 		int count = -1;
-		
+
 		this.getConnection();
 
 		try {
@@ -71,7 +74,7 @@ public class AuthorDao {
 			String query = "";
 			query += " insert into author ";
 			query += " values(null, ?, ?) ";
-			
+
 			// - 바인딩
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, name);
@@ -85,10 +88,45 @@ public class AuthorDao {
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} 
-		
+		}
+
 		this.close();
-		
+
+		return count;
+	}
+
+	// 작가 등록2
+	public int authorInsert2(AuthorVo authorVo) {
+
+		int count = -1;
+
+		this.getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " insert into author ";
+			query += " values(null, ?, ?) ";
+
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, authorVo.getAuthorName());
+			pstmt.setString(2, authorVo.getAuthorDesc());
+
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 등록 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		this.close();
+
 		return count;
 	}
 
@@ -99,9 +137,9 @@ public class AuthorDao {
 		List<AuthorVo> authorList = new ArrayList<AuthorVo>();
 
 		this.getConnection();
-		
+
 		try {
-			
+
 			// 3. SQL문 준비 / 바인딩 / 실행
 			// - sql문 준비
 			String query = "";
@@ -129,21 +167,11 @@ public class AuthorDao {
 				// 리스트에 추가
 				authorList.add(authorVo);
 			}
-			// 4.결과처리
-//			System.out.println(authorList.toString());
-			// 리스트를 이용해서 출력
-//			for (int i = 0; i < authorList.size(); i++) {
-//				int no = authorList.get(i).getAuthorId();
-//				String name = authorList.get(i).getAuthorName();
-//				String desc = authorList.get(i).getAuthorDesc();
-//
-//				System.out.println(no + ".\t" + name + "\t" + desc);
-//			}
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
-		
+
 		this.close();
 
 		return authorList;
@@ -152,7 +180,7 @@ public class AuthorDao {
 	// 작가 삭제
 	public int authorDelete(int no) {
 		int count = -1;
-		
+
 		this.getConnection();
 
 		try {
@@ -174,9 +202,40 @@ public class AuthorDao {
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
-		
+
 		this.close();
-		
+
+		return count;
+	}
+
+	// 작가 삭제2
+	public int authorDelete2(AuthorVo authorVo) {
+		int count = -1;
+
+		this.getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " delete from author ";
+			query += " where author_id = ? ";
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, authorVo.getAuthorId()); // pstmt.setInt(물음표위치, 실제 들어갈 값);
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 삭제 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		this.close();
+
 		return count;
 	}
 
@@ -184,7 +243,7 @@ public class AuthorDao {
 	public int authorUpdate(int id, String name, String desc) {
 
 		int count = -1;
-		
+
 		this.getConnection();
 		// 0. import java.sql.*;
 
@@ -210,10 +269,46 @@ public class AuthorDao {
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} 
+		}
 		this.close();
 		return count;
 
 	}
 
+	// 작가 수정2
+	public int authorUpdate2(AuthorVo authorVo) {
+
+		int count = -1;
+
+		this.getConnection();
+		// 0. import java.sql.*;
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " update author ";
+			query += " set author_name = ?, ";
+			query += " author_desc = ? ";
+			query += " where author_id = ? ";
+			// - 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, authorVo.getAuthorName());
+			pstmt.setString(2, authorVo.getAuthorDesc());
+			pstmt.setInt(3, authorVo.getAuthorId());
+			// - 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건 수정 되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		this.close();
+		return count;
+
+	}
+	
 }
